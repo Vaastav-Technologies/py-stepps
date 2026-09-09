@@ -1,6 +1,6 @@
 [project]
 name = "stepps"
-version = "0.0.0.dev0"
+version = "0.1.0"
 description = "Useful algorithms in Python"
 requires-python = ">=3.12"
 readme = "README.md"
