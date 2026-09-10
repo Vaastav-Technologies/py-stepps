@@ -265,6 +265,11 @@ Run tests with output enabled:
 ```bash
 python -m pytest -s
 ```
+Run the test suite along with doctests:
+
+```bash
+pytest --cov --cov-branch --doctest-modules
+```
 
 Generate a coverage report:
 
