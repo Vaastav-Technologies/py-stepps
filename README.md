@@ -249,90 +249,6 @@ trees they construct.
 
 ---
 
-## Project Structure
-
-```text
-src/
-└── stepps/
-    ├── iterators/
-    │   ├── base_iterator.py
-    │   ├── inorder.py
-    │   ├── levelorder.py
-    │   ├── postorder.py
-    │   └── preorder.py
-    │
-    ├── nodes/
-    │   └── binary_node.py
-    │
-    ├── TreeBuilder/
-    │   ├── tree_builder.py
-    │   ├── level_order_tree_builder.py
-    │   ├── level_order_tree_builder_impl.py
-    │   ├── inorder_tree_builder.py
-    │   ├── inorder_tree_builder_impl.py
-    │   ├── preorder_tree_builder.py
-    │   ├── preorder_tree_builder_impl.py
-    │   ├── postorder_tree_builder.py
-    │   └── postorder_tree_builder_impl.py
-    │
-    ├── trees/
-    │   ├── tree.py
-    │   ├── binary_tree.py
-    │   ├── binary_tree_impl.py
-    │   ├── bst.py
-    │   └── bst_impl.py
-    │
-    └── visualizer/
-        ├── tree_visualizer.py
-        ├── cli_visualizer.py
-        └── cli_visualizer_impl.py
-
-tests/
-├── test_binary_tree.py
-├── test_bst.py
-├── test_inorder_tree_builder.py
-├── test_level_order_tree_builder.py
-├── test_postorder_tree_builder.py
-├── test_preorder_tree_builder.py
-└── test_visualizer.py
-```
-
----
-
-## Architecture
-
-The project separates interfaces from their default implementations.
-
-### Tree Builders
-
-```text
-TreeBuilder
-    ├── LevelOrderTreeBuilder
-    │       └── LevelOrderTreeBuilderImpl
-    ├── InOrderTreeBuilder
-    │       └── InOrderTreeBuilderImpl
-    ├── PreOrderTreeBuilder
-    │       └── PreOrderTreeBuilderImpl
-    └── PostOrderTreeBuilder
-            └── PostOrderTreeBuilderImpl
-```
-
-### Trees
-
-```text
-Tree
- │
- └── BinaryTree
-       │
-       └── BinaryTreeImpl
-              │
-              └── BSTImpl
-```
-
-This architecture keeps public interfaces separate from their concrete
-implementations and allows additional implementations to be introduced.
-
----
 
 ## Testing
 
@@ -341,13 +257,13 @@ The project uses `pytest` for testing.
 Run the complete test suite:
 
 ```bash
-python -m pytest -v
+python -m pytest
 ```
 
 Run tests with output enabled:
 
 ```bash
-python -m pytest -v -s
+python -m pytest -s
 ```
 
 Generate a coverage report:
@@ -374,7 +290,7 @@ The test suite covers:
 The project uses MyPy for static type checking.
 
 ```bash
-python -m mypy .
+mypy -p stepps
 ```
 
 The public APIs use Python generic type parameters to provide type-safe
