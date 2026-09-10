@@ -25,4 +25,4 @@ jobs:
 
       - name: 🧠 Run Mypy (Static Type Check)
         run: |
-          mypy -p algor
+          mypy -p stepps
