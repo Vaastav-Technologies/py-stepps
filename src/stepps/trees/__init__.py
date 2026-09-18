@@ -4,8 +4,8 @@ from typing import Literal, overload
 from stepps.iterators.base_iterator import BinaryTreeIterator
 from stepps.iterators.levelorder import LevelOrderIterator as _LOI
 from stepps.nodes import BinaryNode
-from stepps.trees.avl import AVL
-from stepps.trees.avl_impl import AVLImpl
+from stepps.trees.balanced.avl import AVL
+from stepps.trees.balanced.avl_impl import AVLImpl
 from stepps.trees.binary_tree import BinaryTree
 from stepps.trees.binary_tree_impl import BinaryTreeImpl
 from stepps.trees.bst import BST, Comparable

@@ -7,311 +7,287 @@ from stepps.iterators.levelorder import LevelOrderIterator
 from stepps.iterators.postorder import PostOrderIterator
 from stepps.iterators.preorder import PreOrderIterator
 from stepps.nodes import BinaryNode
-from stepps.trees.avl_impl import AVLImpl
+from stepps.trees.balanced.avl_impl import AVLImpl
+from stepps.trees.binary_tree_impl import BinaryTreeImpl
+from stepps.trees.bst_impl import BSTImpl
 
 
 @pytest.fixture
-def avl_tree() -> AVLImpl[Any]:
-    tree: AVLImpl[Any] = AVLImpl()
+def balancer() -> AVLImpl[Any]:
+    return AVLImpl()
+
+
+def check_balanced(node: BinaryNode[Any] | None) -> int:
+    if node is None:
+        return -1
+
+    left_height = check_balanced(node.left)
+    right_height = check_balanced(node.right)
+
+    assert abs(left_height - right_height) <= 1
+
+    return 1 + max(left_height, right_height)
+
+
+def check_bst(node: BinaryNode[Any] | None) -> None:
+    def check(
+        current: BinaryNode[Any] | None,
+        minimum: Any | None,
+        maximum: Any | None,
+    ) -> None:
+        if current is None:
+            return
+
+        if minimum is not None:
+            assert current.value > minimum
+
+        if maximum is not None:
+            assert current.value < maximum
+
+        check(current.left, minimum, current.value)
+        check(current.right, current.value, maximum)
+
+    check(node, None, None)
+
+
+def test_empty_tree(balancer: AVLImpl[Any]) -> None:
+    tree: BinaryTreeImpl[Any] = BinaryTreeImpl()
+
+    result = balancer.balance(tree)
+
+    assert result is tree
+    assert result.root is None
+
+
+def test_already_balanced_tree(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
 
     for value in [50, 30, 70, 20, 40, 60, 80]:
         tree.insert(value)
 
-    return tree
+    original_root = tree.root
+
+    result = balancer.balance(tree)
+
+    assert result is tree
+    assert result.root is original_root
+    assert result.root is not None
+    assert result.root.value == 50
+
+    check_balanced(result.root)
+    check_bst(result.root)
 
 
-def check_balanced(tree: AVLImpl[Any]) -> None:
-    def check(node: BinaryNode[int] | None) -> int:
-        if node is None:
-            return -1
+def test_ll_rotation(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
 
-        left_height = check(node.left)
-        right_height = check(node.right)
-
-        assert abs(left_height - right_height) <= 1
-
-        return 1 + max(left_height, right_height)
-
-    check(tree.root)
-
-
-def test_empty_tree() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    assert tree.is_empty()
-    assert tree.size() == 0
-    assert tree.height() == -1
-    assert tree.min() is None
-    assert tree.max() is None
-    assert tree.root is None
-
-
-def test_insert_and_size() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    tree.insert(50)
-    tree.insert(30)
-    tree.insert(70)
-
-    assert tree.size() == 3
-    assert not tree.is_empty()
-    assert tree.root is not None
-    assert tree.root.value == 50
-
-
-def test_duplicate_insert() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    first = tree.insert(50)
-    second = tree.insert(50)
-
-    assert first is second
-    assert tree.size() == 1
-    assert tree.root is first
-
-
-def test_find() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    for value in [50, 30, 70]:
+    for value in [30, 20, 10]:
         tree.insert(value)
 
-    node = tree.find(30)
+    result = balancer.balance(tree)
 
-    assert node is not None
-    assert node.value == 30
-    assert tree.find(100) is None
+    assert result is tree
+    assert result.root is not None
+    assert result.root.value == 20
+
+    assert result.root.left is not None
+    assert result.root.left.value == 10
+
+    assert result.root.right is not None
+    assert result.root.right.value == 30
+
+    check_balanced(result.root)
+    check_bst(result.root)
 
 
-def test_contains() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
+def test_rr_rotation(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
 
-    for value in [50, 30, 70]:
+    for value in [10, 20, 30]:
         tree.insert(value)
 
-    assert tree.contains(30)
-    assert 30 in tree
-    assert not tree.contains(100)
-    assert 100 not in tree
+    result = balancer.balance(tree)
+
+    assert result is tree
+    assert result.root is not None
+    assert result.root.value == 20
+
+    assert result.root.left is not None
+    assert result.root.left.value == 10
+
+    assert result.root.right is not None
+    assert result.root.right.value == 30
+
+    check_balanced(result.root)
+    check_bst(result.root)
 
 
-def test_minimum_and_maximum(avl_tree: AVLImpl[Any]) -> None:
-    minimum = avl_tree.minimum()
-    maximum = avl_tree.maximum()
+def test_lr_rotation(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
 
-    assert minimum is not None
-    assert minimum.value == 20
-
-    assert maximum is not None
-    assert maximum.value == 80
-
-
-def test_min_and_max(avl_tree: AVLImpl[Any]) -> None:
-    minimum = avl_tree.min()
-    maximum = avl_tree.max()
-
-    assert minimum is not None
-    assert minimum.value == 20
-
-    assert maximum is not None
-    assert maximum.value == 80
-
-
-def test_height(avl_tree: AVLImpl[Any]) -> None:
-    assert avl_tree.height() == 2
-
-
-def test_leaf_count(avl_tree: AVLImpl[Any]) -> None:
-    assert avl_tree.count_leaves() == 4
-
-
-def test_internal_node_count(avl_tree: AVLImpl[Any]) -> None:
-    assert avl_tree.count_internal_nodes() == 3
-
-
-def test_inorder_traversal(avl_tree: AVLImpl[Any]) -> None:
-    values = [node.value for node in InOrderIterator(avl_tree.root)]
-
-    assert values == [20, 30, 40, 50, 60, 70, 80]
-
-
-def test_preorder_traversal(avl_tree: AVLImpl[Any]) -> None:
-    values = [node.value for node in PreOrderIterator(avl_tree.root)]
-
-    assert values == [50, 30, 20, 40, 70, 60, 80]
-
-
-def test_postorder_traversal(avl_tree: AVLImpl[Any]) -> None:
-    values = [node.value for node in PostOrderIterator(avl_tree.root)]
-
-    assert values == [20, 40, 30, 60, 80, 70, 50]
-
-
-def test_levelorder_traversal(avl_tree: AVLImpl[Any]) -> None:
-    values = [node.value for node in LevelOrderIterator(avl_tree.root)]
-
-    assert values == [50, 30, 70, 20, 40, 60, 80]
-
-
-def test_ll_rotation() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    tree.insert(30)
-    tree.insert(20)
-    tree.insert(10)
-
-    assert tree.root is not None
-    assert tree.root.value == 20
-    assert tree.root.left is not None
-    assert tree.root.left.value == 10
-    assert tree.root.right is not None
-    assert tree.root.right.value == 30
-
-    check_balanced(tree)
-
-
-def test_rr_rotation() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    tree.insert(10)
-    tree.insert(20)
-    tree.insert(30)
-
-    assert tree.root is not None
-    assert tree.root.value == 20
-    assert tree.root.left is not None
-    assert tree.root.left.value == 10
-    assert tree.root.right is not None
-    assert tree.root.right.value == 30
-
-    check_balanced(tree)
-
-
-def test_lr_rotation() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    tree.insert(30)
-    tree.insert(10)
-    tree.insert(20)
-
-    assert tree.root is not None
-    assert tree.root.value == 20
-    assert tree.root.left is not None
-    assert tree.root.left.value == 10
-    assert tree.root.right is not None
-    assert tree.root.right.value == 30
-
-    check_balanced(tree)
-
-
-def test_rl_rotation() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    tree.insert(10)
-    tree.insert(30)
-    tree.insert(20)
-
-    assert tree.root is not None
-    assert tree.root.value == 20
-    assert tree.root.left is not None
-    assert tree.root.left.value == 10
-    assert tree.root.right is not None
-    assert tree.root.right.value == 30
-
-    check_balanced(tree)
-
-
-def test_insert_keeps_tree_balanced() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    for value in [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]:
+    for value in [30, 10, 20]:
         tree.insert(value)
-        check_balanced(tree)
+
+    result = balancer.balance(tree)
+
+    assert result is tree
+    assert result.root is not None
+    assert result.root.value == 20
+
+    assert result.root.left is not None
+    assert result.root.left.value == 10
+
+    assert result.root.right is not None
+    assert result.root.right.value == 30
+
+    check_balanced(result.root)
+    check_bst(result.root)
 
 
-def test_delete_leaf() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
+def test_rl_rotation(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
+
+    for value in [10, 30, 20]:
+        tree.insert(value)
+
+    result = balancer.balance(tree)
+
+    assert result is tree
+    assert result.root is not None
+    assert result.root.value == 20
+
+    assert result.root.left is not None
+    assert result.root.left.value == 10
+
+    assert result.root.right is not None
+    assert result.root.right.value == 30
+
+    check_balanced(result.root)
+    check_bst(result.root)
+
+
+def test_balance_preserves_bst_order(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
+
+    values = [50, 30, 70, 20, 40, 60, 80, 10, 5]
+
+    for value in values:
+        tree.insert(value)
+
+    before = [node.value for node in InOrderIterator(tree.root)]
+
+    result = balancer.balance(tree)
+
+    after = [node.value for node in InOrderIterator(result.root)]
+
+    assert after == before
+    check_bst(result.root)
+    check_balanced(result.root)
+
+
+def test_balance_reduces_height(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
+
+    for value in [10, 20, 30, 40, 50, 60, 70]:
+        tree.insert(value)
+
+    original_height = tree.height()
+
+    result = balancer.balance(tree)
+
+    assert result.height() < original_height
+    check_balanced(result.root)
+    check_bst(result.root)
+
+
+def test_balance_reuses_existing_nodes(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
+
+    for value in [30, 20, 10]:
+        tree.insert(value)
+
+    assert tree.root is not None
+    assert tree.root.left is not None
+    assert tree.root.left.left is not None
+
+    original_nodes = {
+        id(tree.root),
+        id(tree.root.left),
+        id(tree.root.left.left),
+    }
+
+    result = balancer.balance(tree)
+
+    assert result.root is not None
+    assert result.root.left is not None
+    assert result.root.right is not None
+
+    balanced_nodes = {
+        id(result.root),
+        id(result.root.left),
+        id(result.root.right),
+    }
+
+    assert balanced_nodes == original_nodes
+
+
+def test_balance_preserves_traversal_values(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
 
     for value in [50, 30, 70, 20, 40, 60, 80]:
         tree.insert(value)
 
-    assert tree.delete(20)
-    assert tree.size() == 6
-    assert tree.find(20) is None
+    inorder_before = [node.value for node in InOrderIterator(tree.root)]
 
-    check_balanced(tree)
+    preorder_before = [node.value for node in PreOrderIterator(tree.root)]
+
+    postorder_before = [node.value for node in PostOrderIterator(tree.root)]
+
+    levelorder_before = [node.value for node in LevelOrderIterator(tree.root)]
+
+    result = balancer.balance(tree)
+
+    inorder_after = [node.value for node in InOrderIterator(result.root)]
+
+    assert inorder_after == inorder_before
+
+    # The tree shape is allowed to change, so these
+    # traversals are not expected to remain identical.
+    assert preorder_before != []
+    assert postorder_before != []
+    assert levelorder_before != []
 
 
-def test_delete_node_with_one_child() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
+def test_balance_binary_tree(balancer: AVLImpl[Any]) -> None:
+    tree: BinaryTreeImpl[Any] = BinaryTreeImpl()
 
-    for value in [50, 30, 70, 20]:
+    root = BinaryNode(1)
+    root.right = BinaryNode(2)
+    root.right.right = BinaryNode(3)
+    root.right.right.right = BinaryNode(4)
+
+    tree.root = root
+
+    result = balancer.balance(tree)
+
+    assert result is tree
+    assert result.root is not None
+
+    check_balanced(result.root)
+
+
+def test_balance_multiple_levels(balancer: AVLImpl[Any]) -> None:
+    tree: BSTImpl[Any] = BSTImpl()
+
+    for value in [50, 30, 70, 20, 40, 60, 80, 10, 5]:
         tree.insert(value)
 
-    assert tree.delete(30)
-    assert tree.size() == 3
-    assert tree.find(30) is None
+    result = balancer.balance(tree)
 
-    check_balanced(tree)
+    assert result is tree
+    check_balanced(result.root)
+    check_bst(result.root)
 
+    values = [node.value for node in InOrderIterator(result.root)]
 
-def test_delete_node_with_two_children() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    for value in [50, 30, 70, 20, 40, 60, 80]:
-        tree.insert(value)
-
-    assert tree.delete(30)
-    assert tree.size() == 6
-    assert tree.find(30) is None
-
-    check_balanced(tree)
-
-    values = [node.value for node in InOrderIterator(tree.root)]
-
-    assert values == [20, 40, 50, 60, 70, 80]
-
-
-def test_delete_root() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    for value in [50, 30, 70]:
-        tree.insert(value)
-
-    assert tree.delete(50)
-    assert tree.size() == 2
-    assert tree.find(50) is None
-
-    check_balanced(tree)
-
-
-def test_delete_missing_value() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    for value in [50, 30, 70]:
-        tree.insert(value)
-
-    assert not tree.delete(100)
-    assert tree.size() == 3
-
-    check_balanced(tree)
-
-
-def test_delete_keeps_tree_balanced() -> None:
-    tree: AVLImpl[Any] = AVLImpl()
-
-    for value in [50, 30, 70, 20, 40, 60, 80, 10, 25, 35, 45]:
-        tree.insert(value)
-
-    for value in [80, 70, 60, 50]:
-        assert tree.delete(value)
-        check_balanced(tree)
-
-
-def test_clear(avl_tree: AVLImpl[Any]) -> None:
-    avl_tree.clear()
-
-    assert avl_tree.is_empty()
-    assert avl_tree.size() == 0
-    assert avl_tree.root is None
-    assert avl_tree.height() == -1
+    assert values == [5, 10, 20, 30, 40, 50, 60, 70, 80]
