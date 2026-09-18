@@ -96,3 +96,23 @@ class BinaryTree[T](Tree[T]):
         :return: ``None``.
         """
         ...
+
+    @property
+    @abstractmethod
+    def root(self) -> BinaryNode[T] | None:
+        """
+        Return the root node of the tree.
+
+        :return: The root node, or ``None`` if the tree is empty.
+        """
+        ...
+
+    @root.setter
+    @abstractmethod
+    def root(self, node: BinaryNode[T] | None) -> None:
+        """
+        Set the root node of the tree.
+
+        :param node: The new root node.
+        """
+        ...

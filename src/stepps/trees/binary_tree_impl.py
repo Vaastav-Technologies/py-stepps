@@ -20,9 +20,19 @@ class BinaryTreeImpl[T](BinaryTree[T]):
         ]
         | None = None,
     ) -> None:
-        self.root: BinaryNode[T] | None = None
+        self._root: BinaryNode[T] | None = None
         self._size = 0
         self._find_search_iter = find_search_iter
+
+    @property
+    @override
+    def root(self) -> BinaryNode[T] | None:
+        return self._root
+
+    @root.setter
+    @override
+    def root(self, node: BinaryNode[T] | None) -> None:
+        self._root = node
 
     def is_empty(self) -> bool:
         """
