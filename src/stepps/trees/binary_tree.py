@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from abc import abstractmethod
 
 from stepps.nodes import BinaryNode
@@ -116,7 +118,7 @@ class BinaryTree[T](Tree[T]):
         ...
 
     @abstractmethod
-    def right_rotation(self) -> BinaryNode[T] | None:
+    def right_rotation(self) -> BinaryTree[T] | None:
         """
         Perform a right rotation on the tree.
 
@@ -125,7 +127,7 @@ class BinaryTree[T](Tree[T]):
         ...
 
     @abstractmethod
-    def left_rotation(self) -> BinaryNode[T] | None:
+    def left_rotation(self) -> BinaryTree[T] | None:
         """
         Perform a left rotation on the tree.
 
