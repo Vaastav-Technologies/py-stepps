@@ -273,7 +273,7 @@ class BinaryTreeImpl[T](BinaryTree[T]):
         return subtree
 
     @override
-    def right_rotation(self) -> BinaryTree[T]:
+    def right_rotate(self) -> BinaryTree[T]:
         """
         Perform a right rotation on the tree.
 
@@ -290,7 +290,7 @@ class BinaryTreeImpl[T](BinaryTree[T]):
         return self
 
     @override
-    def left_rotation(self) -> BinaryTree[T]:
+    def left_rotate(self) -> BinaryTree[T]:
         """
         Perform a left rotation on the tree.
 

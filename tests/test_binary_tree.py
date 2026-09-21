@@ -277,13 +277,13 @@ def test_get_right_subtree_without_right_child():
 # =====================================================
 
 
-def test_right_rotation(tree):
+def test_right_rotate(tree):
     tree.root = BinaryNode(30)
     tree.root.left = BinaryNode(20)
     tree.root.left.left = BinaryNode(10)
     tree._size = 3
 
-    result = tree.right_rotation()
+    result = tree.right_rotate()
 
     assert result is tree
     assert tree.root is not None
@@ -296,13 +296,13 @@ def test_right_rotation(tree):
     assert tree.root.right.value == 30
 
 
-def test_left_rotation(tree):
+def test_left_rotate(tree):
     tree.root = BinaryNode(10)
     tree.root.right = BinaryNode(20)
     tree.root.right.right = BinaryNode(30)
     tree._size = 3
 
-    result = tree.left_rotation()
+    result = tree.left_rotate()
 
     assert result is tree
     assert tree.root is not None
@@ -315,7 +315,7 @@ def test_left_rotation(tree):
     assert tree.root.right.value == 30
 
 
-def test_right_rotation_with_middle_subtree():
+def test_right_rotate_with_middle_subtree():
     tree = ConcreteBinaryTree(LevelOrderIterator)
 
     root = BinaryNode(30)
@@ -325,7 +325,7 @@ def test_right_rotation_with_middle_subtree():
     tree.root = root
     tree._size = 3
 
-    tree.right_rotation()
+    tree.right_rotate()
 
     assert tree.root is not None
     assert tree.root.value == 20
@@ -339,7 +339,7 @@ def test_right_rotation_with_middle_subtree():
     assert tree.root.right.left.value == 25
 
 
-def test_left_rotation_with_middle_subtree():
+def test_left_rotate_with_middle_subtree():
     tree = ConcreteBinaryTree(LevelOrderIterator)
 
     root = BinaryNode(10)
@@ -349,7 +349,7 @@ def test_left_rotation_with_middle_subtree():
     tree.root = root
     tree._size = 3
 
-    tree.left_rotation()
+    tree.left_rotate()
 
     assert tree.root is not None
     assert tree.root.value == 20
@@ -363,44 +363,44 @@ def test_left_rotation_with_middle_subtree():
     assert tree.root.left.right.value == 15
 
 
-def test_right_rotation_empty_tree():
+def test_right_rotate_empty_tree():
     tree = ConcreteBinaryTree(LevelOrderIterator)
 
-    result = tree.right_rotation()
+    result = tree.right_rotate()
 
     assert result is tree
     assert tree.root is None
 
 
-def test_left_rotation_empty_tree():
+def test_left_rotate_empty_tree():
     tree = ConcreteBinaryTree(LevelOrderIterator)
 
-    result = tree.left_rotation()
+    result = tree.left_rotate()
 
     assert result is tree
     assert tree.root is None
 
 
-def test_right_rotation_without_left_child():
+def test_right_rotate_without_left_child():
     tree = ConcreteBinaryTree(LevelOrderIterator)
 
     tree.root = BinaryNode(30)
     tree._size = 1
 
-    result = tree.right_rotation()
+    result = tree.right_rotate()
 
     assert result is tree
     assert tree.root is not None
     assert tree.root.value == 30
 
 
-def test_left_rotation_without_right_child():
+def test_left_rotate_without_right_child():
     tree = ConcreteBinaryTree(LevelOrderIterator)
 
     tree.root = BinaryNode(30)
     tree._size = 1
 
-    result = tree.left_rotation()
+    result = tree.left_rotate()
 
     assert result is tree
     assert tree.root is not None
