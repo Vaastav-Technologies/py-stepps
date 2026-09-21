@@ -5,24 +5,9 @@ from stepps.nodes import BinaryNode
 from stepps.trees.binary_tree_impl import BinaryTreeImpl
 
 
-class ConcreteBinaryTree(BinaryTreeImpl[int]):
-    """
-    Concrete binary tree used for testing ``BinaryTreeImpl``.
-    """
-
-    def insert(self, value: int) -> BinaryNode[int]:
-        raise NotImplementedError
-
-    def delete(self, value: int) -> bool:
-        raise NotImplementedError
-
-    def invert_tree(self) -> None:
-        super().invert_tree()
-
-
 @pytest.fixture
 def tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     root = BinaryNode(50)
     root.left = BinaryNode(30)
@@ -44,7 +29,7 @@ def tree():
 
 
 def test_new_tree_is_empty():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     assert tree.is_empty()
     assert len(tree) == 0
@@ -100,7 +85,7 @@ def test_height(tree):
 
 
 def test_empty_tree_height():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     assert tree.height() == -1
 
@@ -110,7 +95,7 @@ def test_leaf_count(tree):
 
 
 def test_empty_tree_leaf_count():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     assert tree.count_leaves() == 0
 
@@ -120,7 +105,7 @@ def test_internal_nodes(tree):
 
 
 def test_empty_tree_internal_nodes():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     assert tree.count_internal_nodes() == 0
 
@@ -156,7 +141,7 @@ def test_invert_tree(tree):
 
 
 def test_invert_empty_tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     tree.invert_tree()
 
@@ -164,7 +149,7 @@ def test_invert_empty_tree():
 
 
 def test_invert_single_node_tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     tree.root = BinaryNode(50)
     tree._size = 1
@@ -191,7 +176,7 @@ def test_get_root(tree):
 
 
 def test_get_root_empty_tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     assert tree.get_root() is None
 
@@ -231,7 +216,7 @@ def test_get_right_subtree(tree):
 
 
 def test_get_left_subtree_empty_tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     subtree = tree.get_left_subtree()
 
@@ -240,7 +225,7 @@ def test_get_left_subtree_empty_tree():
 
 
 def test_get_right_subtree_empty_tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     subtree = tree.get_right_subtree()
 
@@ -249,7 +234,7 @@ def test_get_right_subtree_empty_tree():
 
 
 def test_get_left_subtree_without_left_child():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     tree.root = BinaryNode(50)
     tree._size = 1
@@ -261,7 +246,7 @@ def test_get_left_subtree_without_left_child():
 
 
 def test_get_right_subtree_without_right_child():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     tree.root = BinaryNode(50)
     tree._size = 1
@@ -316,7 +301,7 @@ def test_left_rotate(tree):
 
 
 def test_right_rotate_with_middle_subtree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     root = BinaryNode(30)
     root.left = BinaryNode(20)
@@ -340,7 +325,7 @@ def test_right_rotate_with_middle_subtree():
 
 
 def test_left_rotate_with_middle_subtree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     root = BinaryNode(10)
     root.right = BinaryNode(20)
@@ -364,7 +349,7 @@ def test_left_rotate_with_middle_subtree():
 
 
 def test_right_rotate_empty_tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     result = tree.right_rotate()
 
@@ -373,7 +358,7 @@ def test_right_rotate_empty_tree():
 
 
 def test_left_rotate_empty_tree():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     result = tree.left_rotate()
 
@@ -382,7 +367,7 @@ def test_left_rotate_empty_tree():
 
 
 def test_right_rotate_without_left_child():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     tree.root = BinaryNode(30)
     tree._size = 1
@@ -395,7 +380,7 @@ def test_right_rotate_without_left_child():
 
 
 def test_left_rotate_without_right_child():
-    tree = ConcreteBinaryTree(LevelOrderIterator)
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
 
     tree.root = BinaryNode(30)
     tree._size = 1
