@@ -116,19 +116,39 @@ class BinaryTree[T](Tree[T]):
         ...
 
     @abstractmethod
-    def right_rotate(self) -> "BinaryTree[T] | None":
+    def right_rotate(self) -> "BinaryTree[T]":
         """
         Perform a right rotation on the tree.
 
-        :return: The new root node after the rotation.
+        :return: The tree after the rotation.
         """
         ...
 
     @abstractmethod
-    def left_rotate(self) -> "BinaryTree[T] | None":
+    def left_rotate(self) -> "BinaryTree[T]":
         """
         Perform a left rotation on the tree.
 
-        :return: The new root node after the rotation.
+        :return: The tree after the rotation.
+        """
+        ...
+
+    @abstractmethod
+    def set_left_subtree(self, subtree: "BinaryTree[T]") -> None:
+        """
+        Set the left subtree.
+
+        :param subtree: The tree to use as the left subtree.
+        :return: ``None``.
+        """
+        ...
+
+    @abstractmethod
+    def set_right_subtree(self, subtree: "BinaryTree[T]") -> None:
+        """
+        Set the right subtree.
+
+        :param subtree: The tree to use as the right subtree.
+        :return: ``None``.
         """
         ...
