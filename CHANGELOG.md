@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Date format: YYYY-MM-DD
 
+## [0.2.0] - 2026-22-09
+
+### Added
+
+- Added `get_root` to the common `Tree` interface.
+- Added left and right subtree access to the `BinaryTree` interface.
+- Added left and right tree rotation operations to the `BinaryTree` interface.
+- Implemented tree root access, subtree access, and rotation operations in `BinaryTreeImpl`.
+- Added tests covering tree root access, subtree access, and left and right rotations.
+- Added support for using tree rotations as the foundation for future tree balancing algorithms. 
+
 ## [0.1.0] - 2026-09-09
 
 ### Added
