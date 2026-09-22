@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from stepps.nodes import BinaryNode
+
 
 class Tree[T](ABC):
     """
@@ -46,3 +48,12 @@ class Tree[T](ABC):
         :return: ``True`` if the tree is not empty, otherwise ``False``.
         """
         return not self.is_empty()
+
+    @abstractmethod
+    def get_root(self) -> BinaryNode[T] | None:
+        """
+        Return the root node of the tree.
+
+        :return: The root node, or ``None`` if the tree is empty.
+        """
+        ...

@@ -226,3 +226,82 @@ class BinaryTreeImpl[T](BinaryTree[T]):
 
             if node.right is not None:
                 queue.append(node.right)
+
+    @override
+    def get_root(self) -> BinaryNode[T] | None:
+        """
+        Return the root node of the tree.
+
+        :return: The root node, or ``None`` if the tree is empty.
+        """
+        return self.root
+
+    @override
+    def get_left_subtree(self) -> BinaryTree[T]:
+        """
+        Return the left subtree.
+
+        :return: The left subtree.
+        """
+        subtree = BinaryTreeImpl[T](
+            find_search_iter=self._find_search_iter,
+        )
+
+        if self.root is None or self.root.left is None:
+            return subtree
+
+        subtree.root = self.root.left
+
+        return subtree
+
+    @override
+    def get_right_subtree(self) -> BinaryTree[T]:
+        """
+        Return the right subtree.
+
+        :return: The right subtree.
+        """
+        subtree = BinaryTreeImpl[T](
+            find_search_iter=self._find_search_iter,
+        )
+
+        if self.root is None or self.root.right is None:
+            return subtree
+
+        subtree.root = self.root.right
+
+        return subtree
+
+    @override
+    def right_rotate(self) -> BinaryTree[T]:
+        """
+        Perform a right rotation on the tree.
+
+        :return: The tree after the rotation.
+        """
+        if self.root is None or self.root.left is None:
+            return self
+
+        new_root = self.root.left
+        self.root.left = new_root.right
+        new_root.right = self.root
+        self.root = new_root
+
+        return self
+
+    @override
+    def left_rotate(self) -> BinaryTree[T]:
+        """
+        Perform a left rotation on the tree.
+
+        :return: The tree after the rotation.
+        """
+        if self.root is None or self.root.right is None:
+            return self
+
+        new_root = self.root.right
+        self.root.right = new_root.left
+        new_root.left = self.root
+        self.root = new_root
+
+        return self
