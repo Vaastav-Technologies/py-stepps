@@ -19,9 +19,9 @@ def create_tree(root: BinaryNode[int], size: int) -> BinaryTreeImpl[int]:
 
 def test_balance_empty_tree():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result is tree
     assert result.is_empty()
@@ -30,9 +30,9 @@ def test_balance_empty_tree():
 
 def test_balance_single_node_tree():
     tree = create_tree(BinaryNode(10), 1)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result is tree
     assert result.root is not None
@@ -48,10 +48,11 @@ def test_balance_already_balanced_tree():
     root.right = BinaryNode(30)
 
     tree = create_tree(root, 3)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
+    assert result is tree
     assert result.root is not None
     assert result.root.value == 20
 
@@ -73,9 +74,9 @@ def test_balance_ll_case():
     root.left.left = BinaryNode(10)
 
     tree = create_tree(root, 3)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 20
@@ -93,9 +94,9 @@ def test_balance_rr_case():
     root.right.right = BinaryNode(30)
 
     tree = create_tree(root, 3)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 20
@@ -113,9 +114,9 @@ def test_balance_lr_case():
     root.left.right = BinaryNode(20)
 
     tree = create_tree(root, 3)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 20
@@ -133,9 +134,9 @@ def test_balance_rl_case():
     root.right.left = BinaryNode(20)
 
     tree = create_tree(root, 3)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 20
@@ -159,9 +160,9 @@ def test_balance_ll_case_in_left_subtree():
     root.left.left.left = BinaryNode(20)
 
     tree = create_tree(root, 4)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 30
@@ -183,9 +184,9 @@ def test_balance_rr_case_in_right_subtree():
     root.right.right.right = BinaryNode(180)
 
     tree = create_tree(root, 4)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 170
@@ -207,9 +208,9 @@ def test_balance_lr_case_in_left_subtree():
     root.left.left.right = BinaryNode(40)
 
     tree = create_tree(root, 4)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 40
@@ -231,9 +232,9 @@ def test_balance_rl_case_in_right_subtree():
     root.right.right.left = BinaryNode(160)
 
     tree = create_tree(root, 4)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.root.value == 160
@@ -266,9 +267,9 @@ def test_balance_left_heavy_tree():
     root.right.right = BinaryNode(80)
 
     tree = create_tree(root, 8)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.height() <= 3
@@ -290,9 +291,9 @@ def test_balance_right_heavy_tree():
     root.right.right.right = BinaryNode(90)
 
     tree = create_tree(root, 7)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.height() <= 3
@@ -315,9 +316,9 @@ def test_balance_complex_tree():
     root.right.right.right = BinaryNode(90)
 
     tree = create_tree(root, 8)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.root is not None
     assert result.height() <= 3
@@ -344,9 +345,9 @@ def test_balance_preserves_all_nodes():
     root.right.right = BinaryNode(80)
 
     tree = create_tree(root, 7)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result.size() == 7
 
@@ -360,8 +361,8 @@ def test_balance_returns_same_tree_object():
     root.left.left = BinaryNode(10)
 
     tree = create_tree(root, 3)
-    avl = AVLImpl[int]()
+    avl = AVLImpl[int](tree)
 
-    result = avl.balance(tree)
+    result = avl.balance()
 
     assert result is tree
