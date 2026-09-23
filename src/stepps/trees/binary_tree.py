@@ -1,10 +1,11 @@
 from abc import abstractmethod
+from typing import Protocol
 
 from stepps.nodes import BinaryNode
 from stepps.trees.tree import Tree
 
 
-class BinaryTree[T](Tree[T]):
+class BinaryTree[T](Tree[T], Protocol):
     """
     Define the interface for binary tree implementations.
     """
