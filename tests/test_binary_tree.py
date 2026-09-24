@@ -405,7 +405,7 @@ def test_set_left_subtree(tree):
     subtree.root.right = BinaryNode(40)
     subtree._size = 3
 
-    tree.set_left_subtree(subtree)
+    tree._set_left_subtree(subtree)
 
     assert tree.root is not None
     assert tree.root.left is subtree.root
@@ -426,7 +426,7 @@ def test_set_right_subtree(tree):
     subtree.root.right = BinaryNode(80)
     subtree._size = 3
 
-    tree.set_right_subtree(subtree)
+    tree._set_right_subtree(subtree)
 
     assert tree.root is not None
     assert tree.root.right is subtree.root
@@ -452,7 +452,7 @@ def test_right_rotate_nested_subtree():
 
     subtree = tree.get_left_subtree()
     subtree.right_rotate()
-    tree.set_left_subtree(subtree)
+    tree._set_left_subtree(subtree)
 
     assert tree.root is not None
     assert tree.root.value == 100

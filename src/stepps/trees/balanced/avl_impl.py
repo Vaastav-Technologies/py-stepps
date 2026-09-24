@@ -120,21 +120,21 @@ class AVLImpl[T](AVL[T]):
         """
         return self.tree.get_right_subtree()
 
-    def set_left_subtree(self, subtree: BinaryTree[T]) -> None:
+    def _set_left_subtree(self, subtree: BinaryTree[T]) -> None:
         """
         Set the left subtree.
 
         :param subtree: The tree to use as the left subtree.
         """
-        self.tree.set_left_subtree(subtree)
+        self.tree._set_left_subtree(subtree)
 
-    def set_right_subtree(self, subtree: BinaryTree[T]) -> None:
+    def _set_right_subtree(self, subtree: BinaryTree[T]) -> None:
         """
         Set the right subtree.
 
         :param subtree: The tree to use as the right subtree.
         """
-        self.tree.set_right_subtree(subtree)
+        self.tree._set_right_subtree(subtree)
 
     def right_rotate(self) -> BinaryTree[T]:
         """
@@ -201,8 +201,8 @@ class AVLImpl[T](AVL[T]):
         left_subtree = self._balance(tree.get_left_subtree())
         right_subtree = self._balance(tree.get_right_subtree())
 
-        tree.set_left_subtree(left_subtree)
-        tree.set_right_subtree(right_subtree)
+        tree._set_left_subtree(left_subtree)
+        tree._set_right_subtree(right_subtree)
 
         return self._rebalance(tree)
 
@@ -213,29 +213,29 @@ class AVLImpl[T](AVL[T]):
         :param tree: The tree to rebalance.
         :return: The rebalanced tree.
         """
-        balance_factor = self._balance_factor(tree)
+        balance_factor = self._calculate_balance_factor(tree)
 
         if balance_factor > self.balance_factor:
             left_subtree = tree.get_left_subtree()
 
-            if self._balance_factor(left_subtree) < 0:
+            if self._calculate_balance_factor(left_subtree) < 0:
                 left_subtree.left_rotate()
-                tree.set_left_subtree(left_subtree)
+                tree._set_left_subtree(left_subtree)
 
             return tree.right_rotate()
 
         if balance_factor < -self.balance_factor:
             right_subtree = tree.get_right_subtree()
 
-            if self._balance_factor(right_subtree) > 0:
+            if self._calculate_balance_factor(right_subtree) > 0:
                 right_subtree.right_rotate()
-                tree.set_right_subtree(right_subtree)
+                tree._set_right_subtree(right_subtree)
 
             return tree.left_rotate()
 
         return tree
 
-    def _balance_factor(self, tree: BinaryTree[T]) -> int:
+    def _calculate_balance_factor(self, tree: BinaryTree[T]) -> int:
         """
         Return the AVL balance factor of the tree.
 

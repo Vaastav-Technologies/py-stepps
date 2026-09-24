@@ -307,7 +307,7 @@ class BinaryTreeImpl[T](BinaryTree[T]):
         return self
 
     @override
-    def set_left_subtree(self, subtree: BinaryTree[T]) -> None:
+    def _set_left_subtree(self, subtree: BinaryTree[T]) -> None:
         """
         Set the left subtree.
 
@@ -319,7 +319,7 @@ class BinaryTreeImpl[T](BinaryTree[T]):
         self.root.left = subtree.get_root()
 
     @override
-    def set_right_subtree(self, subtree: BinaryTree[T]) -> None:
+    def _set_right_subtree(self, subtree: BinaryTree[T]) -> None:
         """
         Set the right subtree.
 
