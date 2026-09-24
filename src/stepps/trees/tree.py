@@ -1,9 +1,10 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from typing import Protocol
 
 from stepps.nodes import BinaryNode
 
 
-class Tree[T](ABC):
+class Tree[T](Protocol):
     """
     Define the common interface for tree implementations.
     """

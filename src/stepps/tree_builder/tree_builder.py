@@ -1,10 +1,11 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from collections.abc import Sequence
+from typing import Protocol
 
 from stepps.nodes import BinaryNode
 
 
-class TreeBuilder[T](ABC):
+class TreeBuilder[T](Protocol):
     """
     Define the interface for building a binary tree from a sequence.
     """

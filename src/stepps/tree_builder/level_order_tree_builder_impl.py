@@ -3,7 +3,7 @@ from collections.abc import Sequence
 from typing import override
 
 from stepps.nodes import BinaryNode
-from stepps.TreeBuilder.level_order_tree_builder import LevelOrderTreeBuilder
+from stepps.tree_builder.level_order_tree_builder import LevelOrderTreeBuilder
 
 
 class LevelOrderTreeBuilderImpl[T](LevelOrderTreeBuilder[T]):

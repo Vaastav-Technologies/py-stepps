@@ -390,3 +390,78 @@ def test_left_rotate_without_right_child():
     assert result is tree
     assert tree.root is not None
     assert tree.root.value == 30
+
+
+# =====================================================
+# Tree Subtree Assignment
+# =====================================================
+
+
+def test_set_left_subtree(tree):
+    subtree = BinaryTreeImpl[int](LevelOrderIterator)
+
+    subtree.root = BinaryNode(30)
+    subtree.root.left = BinaryNode(20)
+    subtree.root.right = BinaryNode(40)
+    subtree._size = 3
+
+    tree._set_left_subtree(subtree)
+
+    assert tree.root is not None
+    assert tree.root.left is subtree.root
+    assert tree.root.left.value == 30
+
+    assert tree.root.left.left is not None
+    assert tree.root.left.left.value == 20
+
+    assert tree.root.left.right is not None
+    assert tree.root.left.right.value == 40
+
+
+def test_set_right_subtree(tree):
+    subtree = BinaryTreeImpl[int](LevelOrderIterator)
+
+    subtree.root = BinaryNode(70)
+    subtree.root.left = BinaryNode(60)
+    subtree.root.right = BinaryNode(80)
+    subtree._size = 3
+
+    tree._set_right_subtree(subtree)
+
+    assert tree.root is not None
+    assert tree.root.right is subtree.root
+    assert tree.root.right.value == 70
+
+    assert tree.root.right.left is not None
+    assert tree.root.right.left.value == 60
+
+    assert tree.root.right.right is not None
+    assert tree.root.right.right.value == 80
+
+
+def test_right_rotate_nested_subtree():
+    tree = BinaryTreeImpl[int](LevelOrderIterator)
+
+    root = BinaryNode(100)
+    root.left = BinaryNode(50)
+    root.left.left = BinaryNode(30)
+    root.left.left.left = BinaryNode(20)
+
+    tree.root = root
+    tree._size = 4
+
+    subtree = tree.get_left_subtree()
+    subtree.right_rotate()
+    tree._set_left_subtree(subtree)
+
+    assert tree.root is not None
+    assert tree.root.value == 100
+
+    assert tree.root.left is not None
+    assert tree.root.left.value == 30
+
+    assert tree.root.left.left is not None
+    assert tree.root.left.left.value == 20
+
+    assert tree.root.left.right is not None
+    assert tree.root.left.right.value == 50

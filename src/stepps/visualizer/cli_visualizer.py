@@ -1,10 +1,11 @@
 from abc import abstractmethod
+from typing import Protocol
 
 from stepps.nodes import BinaryNode
 from stepps.visualizer.tree_visualizer import TreeVisualizer
 
 
-class CliTreeVisualizer[T](TreeVisualizer[BinaryNode[T] | None]):
+class CliTreeVisualizer[T](TreeVisualizer[BinaryNode[T] | None], Protocol):
     """
     Define the interface for CLI-based binary tree visualization.
     """

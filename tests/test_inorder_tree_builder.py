@@ -1,5 +1,5 @@
 from stepps.iterators.inorder import InOrderIterator
-from stepps.TreeBuilder.inorder_tree_builder_impl import InOrderTreeBuilderImpl
+from stepps.tree_builder.inorder_tree_builder_impl import InOrderTreeBuilderImpl
 
 
 def test_build_empty_sequence():
