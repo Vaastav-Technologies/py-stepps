@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Date format: YYYY-MM-DD
 
+**## [0.3.0] - 2026-09-28**
+
+**### Added**
+
+- Added protected `_set_left_subtree` and `_set_right_subtree` operations for setting the left and right subtrees of a binary tree.
+- Added AVL tree support for maintaining balanced binary trees.
+- Added automatic balancing after AVL tree insert and delete operations.
+- Added support for LL, RR, LR, and RL AVL balancing cases.
+- Added configurable AVL balance factor support.
+
 ## [0.2.0] - 2026-22-09
 
 ### Added
