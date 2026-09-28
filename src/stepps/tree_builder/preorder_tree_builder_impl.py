@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from typing import override
 
 from stepps.nodes import BinaryNode
+from stepps.nodes.binary_node import BinaryNodeImpl
 from stepps.tree_builder.preorder_tree_builder import PreOrderTreeBuilder
 
 
@@ -41,7 +42,7 @@ class PreOrderTreeBuilderImpl[T](PreOrderTreeBuilder[T]):
         if size <= 0:
             return None
 
-        root = BinaryNode(sequence[index])
+        root = BinaryNodeImpl(sequence[index])
 
         left_size = (size - 1) // 2
         right_size = size - 1 - left_size

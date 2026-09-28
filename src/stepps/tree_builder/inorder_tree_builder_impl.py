@@ -44,7 +44,7 @@ class InOrderTreeBuilderImpl[T](InOrderTreeBuilder[T]):
         else:
             mid = (left + right) // 2
 
-        node = BinaryNode(sequence[mid])
+        node = BinaryNodeImpl(sequence[mid])
 
         node.left = self._build(sequence, left, mid - 1)
         node.right = self._build(sequence, mid + 1, right)

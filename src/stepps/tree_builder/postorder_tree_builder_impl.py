@@ -2,6 +2,7 @@ from collections.abc import Sequence
 from typing import override
 
 from stepps.nodes import BinaryNode
+from stepps.nodes.binary_node import BinaryNodeImpl
 from stepps.tree_builder.postorder_tree_builder import PostOrderTreeBuilder
 
 
@@ -43,7 +44,7 @@ class PostOrderTreeBuilderImpl[T](PostOrderTreeBuilder[T]):
             return None
 
         root_index = start + size - 1
-        root = BinaryNode(sequence[root_index])
+        root = BinaryNodeImpl(sequence[root_index])
 
         remaining = size - 1
         left_size = remaining // 2

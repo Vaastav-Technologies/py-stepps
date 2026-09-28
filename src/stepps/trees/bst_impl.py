@@ -1,6 +1,7 @@
 from typing import override
 
 from stepps.nodes import BinaryNode
+from stepps.nodes.binary_node import BinaryNodeImpl
 from stepps.trees.binary_tree_impl import BinaryTreeImpl
 from stepps.trees.bst import BST, Comparable
 
@@ -21,7 +22,7 @@ class BSTImpl[T: Comparable](BST[T], BinaryTreeImpl[T]):
         :return: The node containing ``value``. If the value already exists,
             the existing node is returned.
         """
-        new_node = BinaryNode(value)
+        new_node = BinaryNodeImpl(value)
 
         if self.root is None:
             self.root = new_node

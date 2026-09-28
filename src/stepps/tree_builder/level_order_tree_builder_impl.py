@@ -3,6 +3,7 @@ from collections.abc import Sequence
 from typing import override
 
 from stepps.nodes import BinaryNode
+from stepps.nodes.binary_node import BinaryNodeImpl
 from stepps.tree_builder.level_order_tree_builder import LevelOrderTreeBuilder
 
 
@@ -26,7 +27,7 @@ class LevelOrderTreeBuilderImpl[T](LevelOrderTreeBuilder[T]):
         if not sequence:
             return None
 
-        root = BinaryNode(sequence[0])
+        root = BinaryNodeImpl(sequence[0])
         queue: deque[BinaryNode[T]] = deque([root])
 
         index = 1
@@ -34,12 +35,12 @@ class LevelOrderTreeBuilderImpl[T](LevelOrderTreeBuilder[T]):
         while index < len(sequence):
             parent = queue.popleft()
 
-            parent.left = BinaryNode(sequence[index])
+            parent.left = BinaryNodeImpl(sequence[index])
             queue.append(parent.left)
             index += 1
 
             if index < len(sequence):
-                parent.right = BinaryNode(sequence[index])
+                parent.right = BinaryNodeImpl(sequence[index])
                 queue.append(parent.right)
                 index += 1
 
