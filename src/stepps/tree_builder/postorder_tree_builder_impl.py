@@ -2,7 +2,7 @@ from collections.abc import Sequence
 from typing import override
 
 from stepps.nodes import BinaryNode
-from stepps.nodes.binary_node import BinaryNodeImpl
+from stepps.nodes.impl.binary_node import BinaryNodeImpl
 from stepps.tree_builder.postorder_tree_builder import PostOrderTreeBuilder
 
 
