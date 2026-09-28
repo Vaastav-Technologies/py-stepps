@@ -1,7 +1,8 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
+from typing import Protocol
 
 
-class TreeVisualizer[T](ABC):
+class TreeVisualizer[T](Protocol):
     """
     Define the interface for tree visualization.
     """

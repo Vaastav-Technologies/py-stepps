@@ -1,5 +1,5 @@
 from stepps.iterators.preorder import PreOrderIterator
-from stepps.TreeBuilder.preorder_tree_builder_impl import PreOrderTreeBuilderImpl
+from stepps.tree_builder.preorder_tree_builder_impl import PreOrderTreeBuilderImpl
 
 
 def test_build_empty_sequence():

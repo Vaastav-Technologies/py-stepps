@@ -305,3 +305,27 @@ class BinaryTreeImpl[T](BinaryTree[T]):
         self.root = new_root
 
         return self
+
+    @override
+    def _set_left_subtree(self, subtree: BinaryTree[T]) -> None:
+        """
+        Set the left subtree.
+
+        :param subtree: The tree to use as the left subtree.
+        """
+        if self.root is None:
+            return
+
+        self.root.left = subtree.get_root()
+
+    @override
+    def _set_right_subtree(self, subtree: BinaryTree[T]) -> None:
+        """
+        Set the right subtree.
+
+        :param subtree: The tree to use as the right subtree.
+        """
+        if self.root is None:
+            return
+
+        self.root.right = subtree.get_root()

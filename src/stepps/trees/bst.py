@@ -15,7 +15,7 @@ class Comparable(Protocol):
     def __gt__(self, other: object, /) -> bool: ...
 
 
-class BST[T: Comparable](BinaryTree[T]):
+class BST[T: Comparable](BinaryTree[T], Protocol):
     """
     Define the interface for binary search tree implementations.
 
