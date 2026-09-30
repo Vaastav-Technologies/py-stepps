@@ -1,12 +1,12 @@
 from __future__ import annotations
 
 from stepps.nodes import BinaryNode
+from stepps.trees.balanced.rb_tree.rb_node import RBNode
 
 
-class BinaryNodeImpl[T](BinaryNode[T]):
+class RBNodeImpl[T](RBNode[T]):
     """
-    Represent a node in a binary tree.
-
+    Represent a node in a Red-Black tree.
     """
 
     @property
@@ -14,22 +14,48 @@ class BinaryNodeImpl[T](BinaryNode[T]):
         return self._value
 
     @property
-    def right(self) -> T | None:
+    def right(self) -> BinaryNode[T] | None:
         return self._right
 
+    @right.setter
+    def right(self, node: BinaryNode[T] | None) -> None:
+        self._right = node
+
     @property
-    def left(self) -> T | None:
+    def left(self) -> BinaryNode[T] | None:
         return self._left
+
+    @left.setter
+    def left(self, node: BinaryNode[T] | None) -> None:
+        self._left = node
+
+    @property
+    def parent(self) -> RBNode[T] | None:
+        return self._parent
+
+    @parent.setter
+    def parent(self, node: RBNode[T] | None) -> None:
+        self._parent = node
+
+    @property
+    def color(self) -> int:
+        return self._color
+
+    @color.setter
+    def color(self, color: int) -> None:
+        self._color = color
 
     def __init__(self, value: T) -> None:
         """
-        Initialize a binary tree node.
+        Initialize a Red-Black tree node.
 
         :param value: The value to store in the node.
         """
-        self._value: T = value
-        self._right: BinaryNode[T] | None = None
-        self._left: BinaryNode[T] | None = None
+        self._value = value
+        self._right = None
+        self._left = None
+        self._parent = None
+        self._color = RBNode.RED
 
     def is_leaf(self) -> bool:
         """
