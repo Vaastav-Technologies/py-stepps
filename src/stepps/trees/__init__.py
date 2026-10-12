@@ -1,12 +1,13 @@
 from collections.abc import Callable
 from typing import Literal, overload
 
+from stepps.comparable import Comparable
 from stepps.iterators.base_iterator import BinaryTreeIterator
 from stepps.iterators.levelorder import LevelOrderIterator as _LOI
 from stepps.nodes import BinaryNode
 from stepps.trees.binary_tree import BinaryTree
 from stepps.trees.binary_tree_impl import BinaryTreeImpl
-from stepps.trees.bst import BST, Comparable
+from stepps.trees.bst import BST
 from stepps.trees.bst_impl import BSTImpl
 from stepps.trees.tree import Tree
 

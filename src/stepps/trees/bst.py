@@ -1,18 +1,9 @@
 from abc import abstractmethod
 from typing import Protocol
 
+from stepps.comparable import Comparable
 from stepps.nodes import BinaryNode
 from stepps.trees.binary_tree import BinaryTree
-
-
-class Comparable(Protocol):
-    """
-    Define the comparison operations required by a binary search tree.
-    """
-
-    def __lt__(self, other: object, /) -> bool: ...
-
-    def __gt__(self, other: object, /) -> bool: ...
 
 
 class BST[T: Comparable](BinaryTree[T], Protocol):

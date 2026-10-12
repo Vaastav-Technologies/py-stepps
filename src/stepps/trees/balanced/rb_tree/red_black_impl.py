@@ -1,19 +1,15 @@
-from typing import Any, Protocol, cast, override
+from typing import Any, cast, override
 
+from stepps.comparable import Comparable
 from stepps.nodes import BinaryNode
 from stepps.trees.balanced.rb_tree.rb_node import RBNode
 from stepps.trees.balanced.rb_tree.rb_node_impl import RBNodeImpl
 from stepps.trees.balanced.rb_tree.red_black import RedBlack
 from stepps.trees.binary_tree import BinaryTree
+from stepps.trees.bst_impl import BSTImpl
 
 
-class Comparable(Protocol):
-    def __lt__(self, other: object, /) -> bool: ...
-
-    def __gt__(self, other: object, /) -> bool: ...
-
-
-class RedBlackImpl[T: Comparable](RedBlack[T]):
+class RedBlackImpl[T: Comparable](RedBlack[T], BSTImpl[T]):
     """
     Provide the default implementation of a Red-Black tree.
     """

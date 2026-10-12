@@ -33,7 +33,7 @@ class BinaryNode[T](Protocol):
         """
 
     @abstractmethod
-    def has_left(self):
+    def has_left(self) -> bool:
         """
         Return whether the node has a left child.
 
@@ -41,7 +41,7 @@ class BinaryNode[T](Protocol):
         """
 
     @abstractmethod
-    def has_right(self):
+    def has_right(self) -> bool:
         """
         Return whether the node has a right child.
 
@@ -49,7 +49,7 @@ class BinaryNode[T](Protocol):
         """
 
     @abstractmethod
-    def has_children(self):
+    def has_children(self) -> bool:
         """
         Return whether the node has at least one child.
 
@@ -57,7 +57,7 @@ class BinaryNode[T](Protocol):
         """
 
     @abstractmethod
-    def child_count(self):
+    def child_count(self) -> int:
         """
         Return the number of children of the node.
 
