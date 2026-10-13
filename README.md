@@ -12,8 +12,8 @@
 **Fully typed, modular data structures and algorithms for binary trees in Python.**
 
 `stepps` provides generic binary tree and binary search tree implementations,
-tree traversal iterators, traversal-based tree builders, and tree visualization
-utilities.
+AVL balancing, red-black trees, tree traversal iterators, traversal-based tree
+builders, and tree visualization utilities.
 
 The project follows an interface-and-implementation architecture and uses
 Python generics and static typing throughout its APIs.
@@ -24,6 +24,10 @@ Python generics and static typing throughout its APIs.
 
 - Generic binary tree data structures.
 - Binary search tree implementation.
+- AVL tree balancing with configurable balance factor.
+- Red-black tree implementation.
+- Automatic balancing after AVL and red-black tree insert and delete operations.
+- Binary node creation through `get_binary_node(value)`.
 - Preorder, inorder, postorder, and level-order traversal iterators.
 - Tree builders for preorder, inorder, postorder, and level-order sequences.
 - Binary tree statistics and utility operations.
@@ -73,6 +77,11 @@ the default implementation.
 | `count_leaves()` | Returns the number of leaf nodes. |
 | `count_internal_nodes()` | Returns the number of internal nodes. |
 | `invert_tree()` | Inverts the tree in-place. |
+| `get_root()` | Returns the root node, or `None` if the tree is empty. |
+| `get_left_subtree()` | Returns the left subtree. |
+| `get_right_subtree()` | Returns the right subtree. |
+| `left_rotate()` | Performs a left rotation on the tree. |
+| `right_rotate()` | Performs a right rotation on the tree. |
 
 ---
 
@@ -105,6 +114,75 @@ are greater.
 | `count_leaves()` | Returns the number of leaf nodes. |
 | `count_internal_nodes()` | Returns the number of internal nodes. |
 | `invert_tree()` | Inverts the tree in-place. |
+
+---
+
+## AVL Tree
+
+`AVL` defines the AVL balancing interface and `AVLImpl` provides the
+implementation.
+
+`AVLImpl` accepts a binary tree through its constructor and provides automatic
+balancing after insert and delete operations. The implementation supports LL,
+RR, LR, and RL balancing cases and a configurable balance factor.
+
+`AVL` and `AVLImpl` are available from `stepps.trees.balanced.avl_tree`.
+
+### AVL Tree Methods
+
+| Method | Description |
+|---|---|
+| `balance()` | Balances and returns the supplied binary tree. |
+| `insert(value)` | Inserts a value into the supplied tree and balances it. |
+| `delete(value)` | Deletes a value from the supplied tree and balances it. |
+
+The remaining binary tree operations are delegated to the supplied tree.
+
+---
+
+## Red-Black Tree
+
+`RedBlack` defines the red-black tree interface and `RedBlackImpl` provides the
+implementation.
+
+The red-black tree maintains BST ordering and uses node colors, rotations, and
+recoloring to maintain balance after insert and delete operations. Duplicate
+values are not inserted.
+
+`RedBlackImpl` accepts a binary tree through its constructor and supports
+creating a red-black tree from an existing binary tree.
+
+`RedBlack` and `RedBlackImpl` are available from
+`stepps.trees.balanced.rb_tree.red_black` and
+`stepps.trees.balanced.rb_tree.red_black_impl`, respectively.
+
+### Red-Black Tree Methods
+
+| Method | Description |
+|---|---|
+| `balance()` | Applies red-black balancing and returns the supplied tree. |
+| `insert(value)` | Inserts a value while maintaining BST ordering and red-black balance. |
+| `delete(value)` | Deletes a value while maintaining BST ordering and red-black balance. |
+| `find(value)` | Searches for and returns the node containing the value. |
+| `contains(value)` | Checks whether a value exists in the tree. |
+| `__contains__(value)` | Supports the `value in tree` operation. |
+| `minimum()` | Returns the node containing the minimum value. |
+| `maximum()` | Returns the node containing the maximum value. |
+| `min()` | Returns the node containing the minimum value. |
+| `max()` | Returns the node containing the maximum value. |
+
+The implementation also provides root access, tree statistics, and clear
+operations.
+
+### Red-Black Node
+
+`RBNode` defines the red-black node interface and `RBNodeImpl` provides the
+implementation. Each node extends the binary node attributes with:
+
+| Attribute | Description |
+|---|---|
+| `parent` | Reference to the parent node or `None`. |
+| `color` | The node color: `RED` (`0`) or `BLACK` (`1`). |
 
 ---
 
@@ -194,7 +272,10 @@ displaying binary trees in the CLI.
 
 ## Binary Node
 
-`BinaryNode[T]` is the generic node type used by the binary tree structures.
+`BinaryNode[T]` defines the generic node interface used by the binary tree
+structures and `BinaryNodeImpl[T]` provides the implementation.
+
+`get_binary_node(value)` in `stepps.nodes` creates and returns a binary node.
 
 Each node provides:
 
@@ -281,6 +362,9 @@ The test suite covers:
 
 - Binary tree operations.
 - Binary search tree operations.
+- AVL balancing, including LL, RR, LR, and RL cases.
+- Red-black tree operations, balancing, node colors, and parent references.
+- Red-black tree invariants after randomized insert and delete operations.
 - Tree traversal iterators.
 - Tree builders.
 - Tree visualization.
