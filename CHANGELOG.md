@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Date format: YYYY-MM-DD
 
+## [0.4.0] - 2026-10-13
+
+### Added
+
+- Added red-black trees that automatically maintain balance when values are inserted or deleted.
+- Added support for creating a red-black tree from an existing binary tree, with search, membership checks, minimum, and maximum operations.
+- Added `get_binary_node(value)` in `stepps.nodes` for creating binary nodes.
+
+### Changed
+
+- Changed node creation to use `get_binary_node(value)`, with `BinaryNode` defining the node interface.
+- Moved `AVL` and `AVLImpl` imports to `stepps.trees.balanced.avl_tree`.
+- Moved the `Comparable` type to `stepps.comparable`.
+
 **## [0.3.0] - 2026-09-28**
 
 **### Added**
