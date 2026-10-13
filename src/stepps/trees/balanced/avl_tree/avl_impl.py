@@ -1,7 +1,7 @@
 from typing import override
 
 from stepps.nodes import BinaryNode
-from stepps.trees.balanced.avl import AVL
+from stepps.trees.balanced.avl_tree.avl import AVL
 from stepps.trees.binary_tree import BinaryTree
 
 

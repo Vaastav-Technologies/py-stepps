@@ -1,10 +1,10 @@
 from stepps.iterators.levelorder import LevelOrderIterator
-from stepps.nodes import BinaryNode
-from stepps.trees.balanced.avl_impl import AVLImpl
+from stepps.nodes.impl import BinaryNodeImpl
+from stepps.trees.balanced.avl_tree.avl_impl import AVLImpl
 from stepps.trees.binary_tree_impl import BinaryTreeImpl
 
 
-def create_tree(root: BinaryNode[int], size: int) -> BinaryTreeImpl[int]:
+def create_tree(root: BinaryNodeImpl[int], size: int) -> BinaryTreeImpl[int]:
     tree = BinaryTreeImpl[int](LevelOrderIterator)
     tree.root = root
     tree._size = size
@@ -29,7 +29,7 @@ def test_balance_empty_tree():
 
 
 def test_balance_single_node_tree():
-    tree = create_tree(BinaryNode(10), 1)
+    tree = create_tree(BinaryNodeImpl(10), 1)
     avl = AVLImpl[int](tree)
 
     result = avl.balance()
@@ -43,9 +43,9 @@ def test_balance_single_node_tree():
 
 
 def test_balance_already_balanced_tree():
-    root = BinaryNode(20)
-    root.left = BinaryNode(10)
-    root.right = BinaryNode(30)
+    root = BinaryNodeImpl(20)
+    root.left = BinaryNodeImpl(10)
+    root.right = BinaryNodeImpl(30)
 
     tree = create_tree(root, 3)
     avl = AVLImpl[int](tree)
@@ -69,9 +69,9 @@ def test_balance_already_balanced_tree():
 
 
 def test_balance_ll_case():
-    root = BinaryNode(30)
-    root.left = BinaryNode(20)
-    root.left.left = BinaryNode(10)
+    root = BinaryNodeImpl(30)
+    root.left = BinaryNodeImpl(20)
+    root.left.left = BinaryNodeImpl(10)
 
     tree = create_tree(root, 3)
     avl = AVLImpl[int](tree)
@@ -89,9 +89,9 @@ def test_balance_ll_case():
 
 
 def test_balance_rr_case():
-    root = BinaryNode(10)
-    root.right = BinaryNode(20)
-    root.right.right = BinaryNode(30)
+    root = BinaryNodeImpl(10)
+    root.right = BinaryNodeImpl(20)
+    root.right.right = BinaryNodeImpl(30)
 
     tree = create_tree(root, 3)
     avl = AVLImpl[int](tree)
@@ -109,9 +109,9 @@ def test_balance_rr_case():
 
 
 def test_balance_lr_case():
-    root = BinaryNode(30)
-    root.left = BinaryNode(10)
-    root.left.right = BinaryNode(20)
+    root = BinaryNodeImpl(30)
+    root.left = BinaryNodeImpl(10)
+    root.left.right = BinaryNodeImpl(20)
 
     tree = create_tree(root, 3)
     avl = AVLImpl[int](tree)
@@ -129,9 +129,9 @@ def test_balance_lr_case():
 
 
 def test_balance_rl_case():
-    root = BinaryNode(10)
-    root.right = BinaryNode(30)
-    root.right.left = BinaryNode(20)
+    root = BinaryNodeImpl(10)
+    root.right = BinaryNodeImpl(30)
+    root.right.left = BinaryNodeImpl(20)
 
     tree = create_tree(root, 3)
     avl = AVLImpl[int](tree)
@@ -154,10 +154,10 @@ def test_balance_rl_case():
 
 
 def test_balance_ll_case_in_left_subtree():
-    root = BinaryNode(100)
-    root.left = BinaryNode(50)
-    root.left.left = BinaryNode(30)
-    root.left.left.left = BinaryNode(20)
+    root = BinaryNodeImpl(100)
+    root.left = BinaryNodeImpl(50)
+    root.left.left = BinaryNodeImpl(30)
+    root.left.left.left = BinaryNodeImpl(20)
 
     tree = create_tree(root, 4)
     avl = AVLImpl[int](tree)
@@ -178,10 +178,10 @@ def test_balance_ll_case_in_left_subtree():
 
 
 def test_balance_rr_case_in_right_subtree():
-    root = BinaryNode(100)
-    root.right = BinaryNode(150)
-    root.right.right = BinaryNode(170)
-    root.right.right.right = BinaryNode(180)
+    root = BinaryNodeImpl(100)
+    root.right = BinaryNodeImpl(150)
+    root.right.right = BinaryNodeImpl(170)
+    root.right.right.right = BinaryNodeImpl(180)
 
     tree = create_tree(root, 4)
     avl = AVLImpl[int](tree)
@@ -202,10 +202,10 @@ def test_balance_rr_case_in_right_subtree():
 
 
 def test_balance_lr_case_in_left_subtree():
-    root = BinaryNode(100)
-    root.left = BinaryNode(50)
-    root.left.left = BinaryNode(30)
-    root.left.left.right = BinaryNode(40)
+    root = BinaryNodeImpl(100)
+    root.left = BinaryNodeImpl(50)
+    root.left.left = BinaryNodeImpl(30)
+    root.left.left.right = BinaryNodeImpl(40)
 
     tree = create_tree(root, 4)
     avl = AVLImpl[int](tree)
@@ -226,10 +226,10 @@ def test_balance_lr_case_in_left_subtree():
 
 
 def test_balance_rl_case_in_right_subtree():
-    root = BinaryNode(100)
-    root.right = BinaryNode(150)
-    root.right.right = BinaryNode(170)
-    root.right.right.left = BinaryNode(160)
+    root = BinaryNodeImpl(100)
+    root.right = BinaryNodeImpl(150)
+    root.right.right = BinaryNodeImpl(170)
+    root.right.right.left = BinaryNodeImpl(160)
 
     tree = create_tree(root, 4)
     avl = AVLImpl[int](tree)
@@ -255,16 +255,16 @@ def test_balance_rl_case_in_right_subtree():
 
 
 def test_balance_left_heavy_tree():
-    root = BinaryNode(50)
+    root = BinaryNodeImpl(50)
 
-    root.left = BinaryNode(30)
-    root.left.left = BinaryNode(20)
-    root.left.left.left = BinaryNode(10)
-    root.left.right = BinaryNode(40)
+    root.left = BinaryNodeImpl(30)
+    root.left.left = BinaryNodeImpl(20)
+    root.left.left.left = BinaryNodeImpl(10)
+    root.left.right = BinaryNodeImpl(40)
 
-    root.right = BinaryNode(70)
-    root.right.left = BinaryNode(60)
-    root.right.right = BinaryNode(80)
+    root.right = BinaryNodeImpl(70)
+    root.right.left = BinaryNodeImpl(60)
+    root.right.right = BinaryNodeImpl(80)
 
     tree = create_tree(root, 8)
     avl = AVLImpl[int](tree)
@@ -280,15 +280,15 @@ def test_balance_left_heavy_tree():
 
 
 def test_balance_right_heavy_tree():
-    root = BinaryNode(50)
+    root = BinaryNodeImpl(50)
 
-    root.left = BinaryNode(30)
-    root.left.left = BinaryNode(20)
-    root.left.right = BinaryNode(40)
+    root.left = BinaryNodeImpl(30)
+    root.left.left = BinaryNodeImpl(20)
+    root.left.right = BinaryNodeImpl(40)
 
-    root.right = BinaryNode(70)
-    root.right.right = BinaryNode(80)
-    root.right.right.right = BinaryNode(90)
+    root.right = BinaryNodeImpl(70)
+    root.right.right = BinaryNodeImpl(80)
+    root.right.right.right = BinaryNodeImpl(90)
 
     tree = create_tree(root, 7)
     avl = AVLImpl[int](tree)
@@ -304,16 +304,16 @@ def test_balance_right_heavy_tree():
 
 
 def test_balance_complex_tree():
-    root = BinaryNode(50)
+    root = BinaryNodeImpl(50)
 
-    root.left = BinaryNode(30)
-    root.left.left = BinaryNode(20)
-    root.left.right = BinaryNode(40)
-    root.left.left.left = BinaryNode(10)
+    root.left = BinaryNodeImpl(30)
+    root.left.left = BinaryNodeImpl(20)
+    root.left.right = BinaryNodeImpl(40)
+    root.left.left.left = BinaryNodeImpl(10)
 
-    root.right = BinaryNode(70)
-    root.right.right = BinaryNode(80)
-    root.right.right.right = BinaryNode(90)
+    root.right = BinaryNodeImpl(70)
+    root.right.right = BinaryNodeImpl(80)
+    root.right.right.right = BinaryNodeImpl(90)
 
     tree = create_tree(root, 8)
     avl = AVLImpl[int](tree)
@@ -334,15 +334,15 @@ def test_balance_complex_tree():
 
 
 def test_balance_preserves_all_nodes():
-    root = BinaryNode(50)
+    root = BinaryNodeImpl(50)
 
-    root.left = BinaryNode(30)
-    root.left.left = BinaryNode(20)
-    root.left.right = BinaryNode(40)
+    root.left = BinaryNodeImpl(30)
+    root.left.left = BinaryNodeImpl(20)
+    root.left.right = BinaryNodeImpl(40)
 
-    root.right = BinaryNode(70)
-    root.right.left = BinaryNode(60)
-    root.right.right = BinaryNode(80)
+    root.right = BinaryNodeImpl(70)
+    root.right.left = BinaryNodeImpl(60)
+    root.right.right = BinaryNodeImpl(80)
 
     tree = create_tree(root, 7)
     avl = AVLImpl[int](tree)
@@ -356,9 +356,9 @@ def test_balance_preserves_all_nodes():
 
 
 def test_balance_returns_same_tree_object():
-    root = BinaryNode(30)
-    root.left = BinaryNode(20)
-    root.left.left = BinaryNode(10)
+    root = BinaryNodeImpl(30)
+    root.left = BinaryNodeImpl(20)
+    root.left.left = BinaryNodeImpl(10)
 
     tree = create_tree(root, 3)
     avl = AVLImpl[int](tree)

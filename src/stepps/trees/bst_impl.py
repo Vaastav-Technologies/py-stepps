@@ -1,9 +1,10 @@
 from typing import override
 
+from stepps.comparable import Comparable
 from stepps.nodes import BinaryNode
-from stepps.nodes.impl.binary_node import BinaryNodeImpl
+from stepps.nodes.impl.binary_node_impl import BinaryNodeImpl
 from stepps.trees.binary_tree_impl import BinaryTreeImpl
-from stepps.trees.bst import BST, Comparable
+from stepps.trees.bst import BST
 
 
 class BSTImpl[T: Comparable](BST[T], BinaryTreeImpl[T]):

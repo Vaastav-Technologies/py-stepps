@@ -1,7 +1,7 @@
 import pytest
 
 from stepps.iterators.levelorder import LevelOrderIterator
-from stepps.nodes import BinaryNode
+from stepps.nodes.impl.binary_node_impl import BinaryNodeImpl
 from stepps.trees.binary_tree_impl import BinaryTreeImpl
 
 
@@ -9,13 +9,13 @@ from stepps.trees.binary_tree_impl import BinaryTreeImpl
 def tree():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    root = BinaryNode(50)
-    root.left = BinaryNode(30)
-    root.right = BinaryNode(70)
-    root.left.left = BinaryNode(20)
-    root.left.right = BinaryNode(40)
-    root.right.left = BinaryNode(60)
-    root.right.right = BinaryNode(80)
+    root = BinaryNodeImpl(50)
+    root.left = BinaryNodeImpl(30)
+    root.right = BinaryNodeImpl(70)
+    root.left.left = BinaryNodeImpl(20)
+    root.left.right = BinaryNodeImpl(40)
+    root.right.left = BinaryNodeImpl(60)
+    root.right.right = BinaryNodeImpl(80)
 
     tree.root = root
     tree._size = 7
@@ -151,7 +151,7 @@ def test_invert_empty_tree():
 def test_invert_single_node_tree():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    tree.root = BinaryNode(50)
+    tree.root = BinaryNodeImpl(50)
     tree._size = 1
 
     tree.invert_tree()
@@ -236,7 +236,7 @@ def test_get_right_subtree_empty_tree():
 def test_get_left_subtree_without_left_child():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    tree.root = BinaryNode(50)
+    tree.root = BinaryNodeImpl(50)
     tree._size = 1
 
     subtree = tree.get_left_subtree()
@@ -248,7 +248,7 @@ def test_get_left_subtree_without_left_child():
 def test_get_right_subtree_without_right_child():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    tree.root = BinaryNode(50)
+    tree.root = BinaryNodeImpl(50)
     tree._size = 1
 
     subtree = tree.get_right_subtree()
@@ -263,9 +263,9 @@ def test_get_right_subtree_without_right_child():
 
 
 def test_right_rotate(tree):
-    tree.root = BinaryNode(30)
-    tree.root.left = BinaryNode(20)
-    tree.root.left.left = BinaryNode(10)
+    tree.root = BinaryNodeImpl(30)
+    tree.root.left = BinaryNodeImpl(20)
+    tree.root.left.left = BinaryNodeImpl(10)
     tree._size = 3
 
     result = tree.right_rotate()
@@ -282,9 +282,9 @@ def test_right_rotate(tree):
 
 
 def test_left_rotate(tree):
-    tree.root = BinaryNode(10)
-    tree.root.right = BinaryNode(20)
-    tree.root.right.right = BinaryNode(30)
+    tree.root = BinaryNodeImpl(10)
+    tree.root.right = BinaryNodeImpl(20)
+    tree.root.right.right = BinaryNodeImpl(30)
     tree._size = 3
 
     result = tree.left_rotate()
@@ -303,9 +303,9 @@ def test_left_rotate(tree):
 def test_right_rotate_with_middle_subtree():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    root = BinaryNode(30)
-    root.left = BinaryNode(20)
-    root.left.right = BinaryNode(25)
+    root = BinaryNodeImpl(30)
+    root.left = BinaryNodeImpl(20)
+    root.left.right = BinaryNodeImpl(25)
 
     tree.root = root
     tree._size = 3
@@ -327,9 +327,9 @@ def test_right_rotate_with_middle_subtree():
 def test_left_rotate_with_middle_subtree():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    root = BinaryNode(10)
-    root.right = BinaryNode(20)
-    root.right.left = BinaryNode(15)
+    root = BinaryNodeImpl(10)
+    root.right = BinaryNodeImpl(20)
+    root.right.left = BinaryNodeImpl(15)
 
     tree.root = root
     tree._size = 3
@@ -369,7 +369,7 @@ def test_left_rotate_empty_tree():
 def test_right_rotate_without_left_child():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    tree.root = BinaryNode(30)
+    tree.root = BinaryNodeImpl(30)
     tree._size = 1
 
     result = tree.right_rotate()
@@ -382,7 +382,7 @@ def test_right_rotate_without_left_child():
 def test_left_rotate_without_right_child():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    tree.root = BinaryNode(30)
+    tree.root = BinaryNodeImpl(30)
     tree._size = 1
 
     result = tree.left_rotate()
@@ -400,9 +400,9 @@ def test_left_rotate_without_right_child():
 def test_set_left_subtree(tree):
     subtree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    subtree.root = BinaryNode(30)
-    subtree.root.left = BinaryNode(20)
-    subtree.root.right = BinaryNode(40)
+    subtree.root = BinaryNodeImpl(30)
+    subtree.root.left = BinaryNodeImpl(20)
+    subtree.root.right = BinaryNodeImpl(40)
     subtree._size = 3
 
     tree._set_left_subtree(subtree)
@@ -421,9 +421,9 @@ def test_set_left_subtree(tree):
 def test_set_right_subtree(tree):
     subtree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    subtree.root = BinaryNode(70)
-    subtree.root.left = BinaryNode(60)
-    subtree.root.right = BinaryNode(80)
+    subtree.root = BinaryNodeImpl(70)
+    subtree.root.left = BinaryNodeImpl(60)
+    subtree.root.right = BinaryNodeImpl(80)
     subtree._size = 3
 
     tree._set_right_subtree(subtree)
@@ -442,10 +442,10 @@ def test_set_right_subtree(tree):
 def test_right_rotate_nested_subtree():
     tree = BinaryTreeImpl[int](LevelOrderIterator)
 
-    root = BinaryNode(100)
-    root.left = BinaryNode(50)
-    root.left.left = BinaryNode(30)
-    root.left.left.left = BinaryNode(20)
+    root = BinaryNodeImpl(100)
+    root.left = BinaryNodeImpl(50)
+    root.left.left = BinaryNodeImpl(30)
+    root.left.left.left = BinaryNodeImpl(20)
 
     tree.root = root
     tree._size = 4
