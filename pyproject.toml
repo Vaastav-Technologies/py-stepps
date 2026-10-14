@@ -46,9 +46,9 @@ multitest = ['tox']
 
 
 [project.urls]
-homepage = "https://github.com/Vaastav-Technologies/py-algor"
-source = "https://github.com/Vaastav-Technologies/py-algor"
-issues = "https://github.com/Vaastav-Technologies/py-algor/issues"
+homepage = "https://github.com/Vaastav-Technologies/py-stepps"
+source = "https://github.com/Vaastav-Technologies/py-stepps"
+issues = "https://github.com/Vaastav-Technologies/py-stepps/issues"
 
 [tool.setuptools.packages.find]
 where = ['src']

@@ -21,7 +21,7 @@ Date format: YYYY-MM-DD
 - Moved `AVL` and `AVLImpl` imports to `stepps.trees.balanced.avl_tree`.
 - Moved the `Comparable` type to `stepps.comparable`.
 
-**## [0.3.0] - 2026-09-28**
+## [0.3.0] - 2026-09-28
 
 **### Added**
 
@@ -31,7 +31,7 @@ Date format: YYYY-MM-DD
 - Added support for LL, RR, LR, and RL AVL balancing cases.
 - Added configurable AVL balance factor support.
 
-## [0.2.0] - 2026-22-09
+## [0.2.0] - 2026-09-22
 
 ### Added
 
