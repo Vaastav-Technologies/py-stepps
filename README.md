@@ -9,7 +9,7 @@
 
 ---
 
-**Fully typed, modular data structures and algorithms for binary trees in Python.**
+**Fully typed, modular data structures and algorithms in Python.**
 
 `stepps` provides generic binary tree and binary search tree implementations,
 AVL balancing, red-black trees, tree traversal iterators, traversal-based tree
