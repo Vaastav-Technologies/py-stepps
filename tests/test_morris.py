@@ -5,6 +5,7 @@ import pytest
 from stepps.iterators.base_iterator import BinaryTreeIterator
 from stepps.iterators.inorder import InOrderIterator
 from stepps.iterators.morris import MorrisIterator
+from stepps.iterators.morris_impl import MorrisIteratorImpl
 from stepps.nodes.impl.binary_node_impl import BinaryNodeImpl
 
 # =====================================================
@@ -116,7 +117,7 @@ def assert_iterator_exhausted(iterator):
 def test_inorder_node_identity_and_restoration(tree_case):
     root, nodes, expected = tree_case
     original = snapshot_tree(nodes)
-    iterator = MorrisIterator(root)
+    iterator: MorrisIterator = MorrisIteratorImpl(root)
 
     assert isinstance(iterator, BinaryTreeIterator)
     assert iter(iterator) is iterator
@@ -140,7 +141,7 @@ def test_close_at_every_traversal_position(tree_case):
     original = snapshot_tree(nodes)
 
     for count in range(len(expected) + 1):
-        iterator = MorrisIterator(root)
+        iterator: MorrisIterator = MorrisIteratorImpl(root)
         for node in expected[:count]:
             assert next(iterator) is node
 
@@ -151,7 +152,7 @@ def test_close_at_every_traversal_position(tree_case):
         assert_tree_restored(original)
 
         # The restored tree can be traversed again by a fresh iterator.
-        assert list(MorrisIterator(root)) == expected
+        assert list(MorrisIteratorImpl(root)) == expected
         assert_tree_restored(original)
 
 
@@ -163,7 +164,7 @@ def test_close_at_every_traversal_position(tree_case):
 def test_close_restores_after_break(tree_case):
     root, nodes, expected = tree_case
     original = snapshot_tree(nodes)
-    iterator = MorrisIterator(root)
+    iterator: MorrisIterator = MorrisIteratorImpl(root)
 
     try:
         for node in iterator:
@@ -182,7 +183,7 @@ def test_close_restores_after_exception(tree_case):
     error = RuntimeError("consumer failed")
 
     for count in range(len(expected) + 1):
-        iterator = MorrisIterator(root)
+        iterator: MorrisIterator = MorrisIteratorImpl(root)
         with pytest.raises(RuntimeError) as caught:
             try:
                 for node in expected[:count]:
@@ -200,7 +201,7 @@ def test_close_after_full_traversal(tree_case):
     root, nodes, expected = tree_case
     original = snapshot_tree(nodes)
 
-    iterator = MorrisIterator(root)
+    iterator: MorrisIterator = MorrisIteratorImpl(root)
     assert list(iterator) == expected
     assert_iterator_exhausted(iterator)
     iterator.close()
@@ -217,7 +218,7 @@ def test_close_after_full_traversal(tree_case):
 def test_context_manager_restores_after_break(tree_case):
     root, nodes, expected = tree_case
     original = snapshot_tree(nodes)
-    iterator = MorrisIterator(root)
+    iterator: MorrisIterator = MorrisIteratorImpl(root)
 
     with iterator as entered:
         assert entered is iterator
@@ -235,7 +236,7 @@ def test_context_manager_restores_after_exception(tree_case):
     error = RuntimeError("consumer failed")
 
     for count in range(len(expected) + 1):
-        iterator = MorrisIterator(root)
+        iterator: MorrisIterator = MorrisIteratorImpl(root)
         with pytest.raises(RuntimeError) as caught, iterator:
             for node in expected[:count]:
                 assert next(iterator) is node
@@ -250,7 +251,7 @@ def test_context_manager_after_full_traversal(tree_case):
     root, nodes, expected = tree_case
     original = snapshot_tree(nodes)
 
-    with MorrisIterator(root) as iterator:
+    with MorrisIteratorImpl(root) as iterator:
         assert list(iterator) == expected
 
     assert_tree_restored(original)
@@ -272,7 +273,7 @@ def test_morris_threads_use_existing_predecessor_links():
     middle.right = predecessor
     original = snapshot_tree([root, left, middle, predecessor])
 
-    iterator = MorrisIterator(root)
+    iterator: MorrisIterator = MorrisIteratorImpl(root)
     try:
         assert next(iterator) is left
         # Morris must thread the rightmost node, preserving real right edges.
@@ -305,10 +306,10 @@ def test_deep_tree_without_recursion(side):
 
     original = snapshot_tree(nodes)
     expected = list(InOrderIterator(nodes[0]))
-    assert list(MorrisIterator(nodes[0])) == expected
+    assert list(MorrisIteratorImpl(nodes[0])) == expected
     assert_tree_restored(original)
 
-    iterator = MorrisIterator(nodes[0])
+    iterator = MorrisIteratorImpl(nodes[0])
     assert next(iterator) is expected[0]
     iterator.close()
     assert_tree_restored(original)
@@ -335,10 +336,10 @@ def test_random_tree_matches_stack_based_inorder(seed):
 
     original = snapshot_tree(nodes)
     expected = list(InOrderIterator(nodes[0]))
-    assert list(MorrisIterator(nodes[0])) == expected
+    assert list(MorrisIteratorImpl(nodes[0])) == expected
     assert_tree_restored(original)
 
-    iterator = MorrisIterator(nodes[0])
+    iterator = MorrisIteratorImpl(nodes[0])
     try:
         for node in expected[: random.randrange(1, len(nodes))]:
             assert next(iterator) is node

@@ -1,108 +1,56 @@
+from abc import abstractmethod
 from types import TracebackType
-from typing import Self
+from typing import Protocol, Self
 
-from stepps.iterators.base_iterator import BinaryTreeIterator
 from stepps.nodes import BinaryNode
 
 
-class MorrisIterator[T](BinaryTreeIterator[BinaryNode[T]]):
+class MorrisIterator[T](Protocol):
     """
-    Iterate over a binary tree using Morris inorder traversal.
+    Define the interface for Morris inorder traversal of a binary tree.
 
-    Nodes are visited in the following order:
-
-    .. code-block:: text
-
-        Left -> Root -> Right
-
-    The traversal takes O(n) total time and O(1) auxiliary space by temporarily
-    linking inorder predecessors to their ancestors through right pointers.
-
-    All temporary links are removed when traversal finishes. If traversal
+    Nodes are visited in Left -> Root -> Right order using O(1) auxiliary
+    space. Temporary links are removed when traversal finishes. If traversal
     stops early, call ``close`` or use a ``with`` block to restore the tree.
     Returned nodes may contain temporary links, so do not modify or traverse
     the tree independently until the iterator is exhausted or closed.
-
-    :param root: The root node of the tree to traverse.
     """
 
-    def __init__(self, root: BinaryNode[T] | None) -> None:
-        """
-        Initialize the Morris inorder iterator.
+    @abstractmethod
+    def __iter__(self) -> Self:
+        """Return the iterator itself."""
+        ...
 
-        :param root: The root node of the tree to traverse.
-        """
-        self._current: BinaryNode[T] | None = root
-        """
-        Node from which the next traversal step begins.
-        """
-
+    @abstractmethod
     def __next__(self) -> BinaryNode[T]:
         """
-        Return the next node in the inorder traversal.
-
-        Each call takes O(1) amortized time and O(n) time in the worst case.
+        Return the next node in inorder traversal.
 
         :return: The next node in the traversal.
-        :raises StopIteration: If all nodes have been visited or the iterator
-            has been closed.
+        :raises StopIteration: If the iterator is exhausted or closed.
         """
-        current = self._current
+        ...
 
-        while current is not None:
-            predecessor = current.left
-
-            if predecessor is None:
-                self._current = current.right
-
-                return current
-
-            while predecessor.right is not None and predecessor.right is not current:
-                predecessor = predecessor.right
-
-            if predecessor.right is None:
-                predecessor.right = current
-                current = current.left
-            else:
-                predecessor.right = None
-                self._current = current.right
-
-                return current
-
-        raise StopIteration
-
+    @abstractmethod
     def close(self) -> None:
         """
         Restore temporary links and exhaust the iterator.
 
-        The remaining nodes are visited without being returned to the caller.
-        This takes O(n) time in the worst case and O(1) auxiliary space.
         Calling this method on an exhausted or closed iterator has no effect.
         """
-        for _ in self:
-            pass
+        ...
 
+    @abstractmethod
     def __enter__(self) -> Self:
-        """
-        Return the iterator for use in a context manager.
+        """Return the iterator for use in a context manager."""
+        ...
 
-        :return: The current iterator instance.
-        """
-        return self
-
+    @abstractmethod
     def __exit__(
         self,
         exc_type: type[BaseException] | None,
         exc_value: BaseException | None,
         traceback: TracebackType | None,
     ) -> None:
-        """
-        Restore temporary links when leaving the context.
-
-        Exceptions from the context are allowed to propagate after cleanup.
-
-        :param exc_type: The exception type, if an exception was raised.
-        :param exc_value: The exception instance, if an exception was raised.
-        :param traceback: The traceback, if an exception was raised.
-        """
-        self.close()
+        """Restore temporary links, allowing exceptions to propagate."""
+        ...
