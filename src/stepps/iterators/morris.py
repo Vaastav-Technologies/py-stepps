@@ -1,25 +1,27 @@
 from abc import abstractmethod
 from types import TracebackType
-from typing import Protocol, Self
+from typing import Self
 
+from stepps.iterators.base_iterator import BinaryTreeIterator
 from stepps.nodes import BinaryNode
 
 
-class MorrisIterator[T](Protocol):
+class MorrisIterator[T](BinaryTreeIterator[BinaryNode[T]]):
     """
-    Define the interface for Morris inorder traversal of a binary tree.
+    Define the binary tree iterator interface for Morris inorder traversal.
 
-    Nodes are visited in Left -> Root -> Right order using O(1) auxiliary
-    space. Temporary links are removed when traversal finishes. If traversal
+    Like ``InOrderIterator``, this iterator visits nodes in Left -> Root -> Right
+    order. Inorder describes the visit order; Morris describes the traversal
+    algorithm. ``InOrderIterator`` uses an explicit stack with O(h) auxiliary
+    space, where h is the tree height. Morris traversal uses O(1) auxiliary
+    space by temporarily linking inorder predecessors to their ancestors
+    through right pointers, without a stack or recursion.
+
+    Temporary links are removed when traversal finishes. If traversal
     stops early, call ``close`` or use a ``with`` block to restore the tree.
     Returned nodes may contain temporary links, so do not modify or traverse
     the tree independently until the iterator is exhausted or closed.
     """
-
-    @abstractmethod
-    def __iter__(self) -> Self:
-        """Return the iterator itself."""
-        ...
 
     @abstractmethod
     def __next__(self) -> BinaryNode[T]:

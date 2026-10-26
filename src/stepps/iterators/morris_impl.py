@@ -1,12 +1,11 @@
 from types import TracebackType
 from typing import Self, override
 
-from stepps.iterators.base_iterator import BinaryTreeIterator
 from stepps.iterators.morris import MorrisIterator
 from stepps.nodes import BinaryNode
 
 
-class MorrisIteratorImpl[T](BinaryTreeIterator[BinaryNode[T]], MorrisIterator[T]):
+class MorrisIteratorImpl[T](MorrisIterator[T]):
     """
     Iterate over a binary tree using Morris inorder traversal.
 
