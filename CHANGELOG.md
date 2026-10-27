@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Date format: YYYY-MM-DD
 
+## [0.5.0] - 2026-10-27
+
+### Added
+
+- Added Morris inorder traversal for visiting binary tree nodes in left-root-right order using constant auxiliary space, without a stack or recursion.
+- Added automatic restoration of temporary tree links when Morris traversal finishes, with `close()` and `with` block support for restoring the tree when traversal stops early.
+
 ## [0.4.0] - 2026-10-13
 
 ### Added
