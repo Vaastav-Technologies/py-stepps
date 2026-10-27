@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Date format: YYYY-MM-DD
 
+## [0.5.0.post1] - 2026-10-27
+
+a post release was needed to satisfy author/maintainer identity on PyPI
+
+### Changed
+- Updated package author metadata in pyproject.toml to display both Suhas Krishna Srivastava and Trinay Mitra on PyPI.
+- Updated package maintainer metadata to include Vaastav Technologies.
+
 ## [0.5.0] - 2026-10-27
 
 ### Added
