@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Date format: YYYY-MM-DD
 
+## [0.5.0.post2] - 2026-10-27
+
+A post-release was needed to update the author contact information on PyPI.
+
+### Changed
+- Updated package author metadata in `pyproject.toml` to include the Vaastav Technologies contact email (`info@vaastav.tech`).
+
 ## [0.5.0.post1] - 2026-10-27
 
 a post release was needed to satisfy author/maintainer identity on PyPI
